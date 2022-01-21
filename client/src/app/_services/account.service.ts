@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
-  baseUrl = 'https://localhost:7132/api/';
+  baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);  //E ca un Buffer, ii spunem ce tip de data sa stocheze in buffer si cate aceste date
   currentUser$ = this.currentUserSource.asObservable();    // "currentUser$" este o conventie unde $ reprezinta ca tipul de data este un Observable
 
