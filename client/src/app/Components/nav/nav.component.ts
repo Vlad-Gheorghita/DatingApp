@@ -19,7 +19,6 @@ export class NavComponent implements OnInit {
       private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.currentUserName=JSON.parse(localStorage.getItem('user')!).userName;
   }
 
   login() {

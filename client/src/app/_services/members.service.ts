@@ -15,12 +15,12 @@ import { Member } from '../_models/member';
 })
 export class MembersService {
   baseUrl = environment.apiUrl;
-  members: Member[] = [];
+  members: Member[] = []; //Putem salva aici date pentru ca serviciile sunt singleton
 
   constructor(private http: HttpClient) { }
 
   getMembers() {
-    if(this.members.length > 0) return of(this.members);    //of() returneaza membrii din serviuciu ca un Observable daca exista in members[]
+    if (this.members.length > 0) return of(this.members);    //of() returneaza membrii din serviuciu ca un Observable daca exista in members[]
     return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
       map(members => {
         this.members = members;
@@ -31,7 +31,7 @@ export class MembersService {
 
   getMember(username: string) {
     const member = this.members.find(x => x.username === username);
-    if(member !== undefined) return of(member);
+    if (member !== undefined) return of(member);
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
@@ -41,6 +41,14 @@ export class MembersService {
         const index = this.members.indexOf(member);
         this.members[index] = member;
       })
-    );    
+    );
+  }
+
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photoId, {}) //Punem un Obiect gol ca nu vrem sa trimitem niciun Boddy la HttpRequest
+  }
+
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
   }
 }
