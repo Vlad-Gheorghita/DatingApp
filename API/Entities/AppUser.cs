@@ -29,5 +29,8 @@ namespace API.Entities
         //     return DateOfBirth.CalculateAge();
         // }
         // Am comentat asta deoarece incercam sa nu luam toate datele din baza de date cu scopul optimizarii rularii querry ului -> uita-te in AutoMapperProfiles.cs
+
+        public ICollection<UserLike> LikedByUsers { get; set; }
+        public ICollection<UserLike> LikedUsers { get; set; }
     }
 }
