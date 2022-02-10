@@ -30,7 +30,7 @@ namespace API.Controllers
             _userRepository = userRepository;
 
         }
-
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams) //Trebuie sa ii zicem controller-ului ca vrem ca parametrii sa ii luam din query
         {

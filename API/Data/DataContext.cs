@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser, AppRole, int,
+             IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+                IdentityRoleClaim<int>, IdentityUserToken<int>>       //DbContext      <--Asta e inainte sa folosim .NET Identity
     {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<AppUser> Users { get; set; } //Acesta este un tabel cu Users
+        //public DbSet<AppUser> Users { get; set; } //Acesta este un tabel cu Users     <-- Asta e inainte sa folosim .NET Identity
         public DbSet<UserLike> Likes { get; set; }  //Acesta este un tabel intermediar cu LikedBy and Liked
         public DbSet<Message> Messages { get; set; }
 
@@ -21,6 +25,18 @@ namespace API.Data
                                                                         //OBS: de la .NET 5 EntityFramework ofera automat many to many
         {
             base.OnModelCreating(buiilder);
+
+            buiilder.Entity<AppUser>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+                                                                        //Astea 2 sunt din .NET Identity
+            buiilder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
 
             buiilder.Entity<UserLike>()
                 .HasKey(k => new { k.SourceUserId, k.LikedUserId });
