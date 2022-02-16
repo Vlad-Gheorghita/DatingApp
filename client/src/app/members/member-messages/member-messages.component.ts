@@ -15,15 +15,19 @@ export class MemberMessagesComponent implements OnInit {
 
   messageContent: string;
 
-  constructor(private messageService: MessageService) { }
+  constructor(public messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
   sendMessage() {
-    this.messageService.sendMessage(this.username, this.messageContent).subscribe(message => {
-      this.messages.push(message);
-      this.messageForm.reset(); //reset() pentru a sterge datele din form dupa ce trimitem
+    // this.messageService.sendMessage(this.username, this.messageContent).subscribe(message => {
+    //   this.messages.push(message);
+    //   this.messageForm.reset(); //reset() pentru a sterge datele din form dupa ce trimitem
+    // })
+
+    this.messageService.sendMessage(this.username, this.messageContent).then(() => {
+      this.messageForm.reset();
     })
   }
 

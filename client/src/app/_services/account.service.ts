@@ -4,6 +4,7 @@ import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,14 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1);  //E ca un Buffer, ii spunem ce tip de data sa stocheze in buffer si cate aceste date
   currentUser$ = this.currentUserSource.asObservable();    // "currentUser$" este o conventie unde $ reprezinta ca tipul de data este un Observable
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private presence: PresenceService) { }
 
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map(user => {  // puteam folosi si (user: User) dar ts e destul de smart sa isi dea seama ca vorbim de obiect User
         if (user) {
           this.setCurrentUser(user);
+          this.presence.createHubConnection(user);
         }
       })
     )
@@ -32,6 +34,7 @@ export class AccountService {
         const user = response;
         if (user) {
           this.setCurrentUser(user);
+          this.presence.createHubConnection(user);
         }
       })
     );
@@ -48,6 +51,7 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null!); //"!" Ii spune ts-ul ca cu toate ca ceva poate sa fie null, acesta o sa aiba incredere ca nu o sa fie
+    this.presence.stopHubConnection();
   }
 
   getDecodedToken(token: string) {

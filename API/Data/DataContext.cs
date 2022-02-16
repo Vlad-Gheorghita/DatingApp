@@ -20,6 +20,8 @@ namespace API.Data
         //public DbSet<AppUser> Users { get; set; } //Acesta este un tabel cu Users     <-- Asta e inainte sa folosim .NET Identity
         public DbSet<UserLike> Likes { get; set; }  //Acesta este un tabel intermediar cu LikedBy and Liked
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Connection> Connections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder buiilder)  //Aici facem override la DbContext. Specificam ce fel de tabel si ce fel de relatie vrem (Many to Many)
                                                                         //OBS: de la .NET 5 EntityFramework ofera automat many to many
