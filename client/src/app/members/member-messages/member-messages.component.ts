@@ -15,6 +15,7 @@ export class MemberMessagesComponent implements OnInit {
   @Input() username: string;
 
   messageContent: string;
+  loading=false;
 
   constructor(public messageService: MessageService) { }
 
@@ -27,9 +28,10 @@ export class MemberMessagesComponent implements OnInit {
     //   this.messageForm.reset(); //reset() pentru a sterge datele din form dupa ce trimitem
     // })
 
+    this.loading = true;
     this.messageService.sendMessage(this.username, this.messageContent).then(() => {
       this.messageForm.reset();
-    })
+    }).finally(() => this.loading=false);
   }
 
 }
