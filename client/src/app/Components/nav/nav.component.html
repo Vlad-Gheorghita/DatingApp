@@ -1,8 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <div class="container">
-        <a class="navbar-brand" routerLink="/">Dating App</a>
+        <a *ngIf="!(accountService.currentUser$ | async)" class="navbar-brand" routerLink="/">Dating App</a>
         <ul class="navbar-nav me-auto">
             <ng-container *ngIf="accountService.currentUser$ | async">
+                <li class="nav-item">
+                    <a class="navbar-brand" routerLink="/members">Dating App</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
                 </li>
