@@ -9,11 +9,33 @@
 }
 
 .chat li {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px dotted #B3A9A9;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .rounded-circle {
-    max-height: 50px;
+    max-height: 35px;
+}
+
+.chat-scrollbar {
+    --scrollbar-border-radius: 7px;
+    --scrollbar-padding: 4px;
+    --scrollbar-viewport-margin: 0;
+    --scrollbar-track-color: transparent;
+    --scrollbar-wrapper-color: transparent;
+    --scrollbar-thumb-color: rgba(233,84,32, 0.6);
+    --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color);
+    --scrollbar-size: 5px;
+    --scrollbar-hover-size: var(--scrollbar-size);
+    --scrollbar-thumb-transition: height ease-out 150ms, width ease-out 150ms;
+    --scrollbar-track-transition: height ease-out 150ms, width ease-out 150ms;
+}
+
+.msg_cotainer{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0px;
+    border-radius: 25px;
+    padding: 10px;
+    position: relative;
 }

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NgScrollbarOptions } from 'ngx-scrollbar';
 import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
 
@@ -19,8 +20,11 @@ export class MemberMessagesComponent implements OnInit {
 
   constructor(public messageService: MessageService) { }
 
+
   ngOnInit(): void {
   }
+
+  
 
   sendMessage() {
     // this.messageService.sendMessage(this.username, this.messageContent).subscribe(message => {
