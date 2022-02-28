@@ -12,7 +12,7 @@ service between two users and other functionalities such as liking another user.
 ## :page_with_curl: Features
 
 🔹 User authentication (login and register).<br>
-🔹 Liking another user.<br>
+🔹 Like another user.<br>
 🔹 Profile creation.<br>
 🔹 Messaging between users.<br>
 🔹 Filter user search.<br>
