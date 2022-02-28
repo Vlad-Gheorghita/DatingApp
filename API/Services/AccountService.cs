@@ -7,6 +7,7 @@ using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -25,25 +26,19 @@ namespace API.Services
             _userManager = userManager;
         }
 
-        public async Task<UserOkDto> LoginUserAsync(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> LoginUserAsync(LoginDto loginDto)
         {
             var user = await _userManager.Users
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
 
             if (user == null)  // return Unauthorized("Invalid username");
-                return new UserOkDto
-                {
-                    Message = "Invalid username"
-                };
+                return new UnauthorizedObjectResult("Invalid username");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded) //return  Unauthorized();
-                return new UserOkDto
-                {
-                    Message = "Invalid password"
-                };
+                return new UnauthorizedObjectResult("Something went wrong");
 
 
             // using var hmac = new HMACSHA512(user.PasswordSalt);
@@ -55,36 +50,20 @@ namespace API.Services
             //     if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
             // }        <-- Asta e inainte sa folosim .NET Identity
 
-            // return new UserDto
-            // {
-            //     UserName = user.UserName,
-            //     Token = await _tokenService.CreateToken(user),
-            //     PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-            //     KnownAs = user.KnownAs,
-            //     Gender = user.Gender
-            // };
-
-            return new UserOkDto
+            return new OkObjectResult(new UserDto
             {
-                User = new UserDto
-                {
-                    UserName = user.UserName,
-                    Token = await _tokenService.CreateToken(user),
-                    PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-                    KnownAs = user.KnownAs,
-                    Gender = user.Gender
-                },
-                IsOk = true,
-            };
+                UserName = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
+            });
         }
 
-        public async Task<UserOkDto> RegisterUserAsync(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> RegisterUserAsync(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.UserName)) //return BadRequest("Username is taken");
-                return new UserOkDto
-                {
-                    Message = "Username is taken"
-                };
+                return new BadRequestObjectResult("Username is already taken");
 
             var user = _mapper.Map<AppUser>(registerDto);
 
@@ -102,38 +81,21 @@ namespace API.Services
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if (!result.Succeeded) //return BadRequest(result.Errors);
-                return new UserOkDto
-                {
-                    Error = result.Errors,
-                };
+                return new BadRequestObjectResult(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
             if (!roleResult.Succeeded) //return BadRequest(result.Errors);
-                return new UserOkDto
-                {
-                    Error = result.Errors
-                };
+                return new BadRequestObjectResult(roleResult.Errors);
 
-            return new UserOkDto
+
+            return new OkObjectResult(new UserDto
             {
-                User = new UserDto
-                {
-                    UserName = user.UserName,
-                    Token = await _tokenService.CreateToken(user),
-                    KnownAs = user.KnownAs,
-                    Gender = user.Gender
-                },
-                IsOk = true,
-            };
-
-            // return new UserDto
-            // {
-            //     UserName = user.UserName,
-            //     Token = await _tokenService.CreateToken(user),
-            //     KnownAs = user.KnownAs,
-            //     Gender = user.Gender
-            // };
+                UserName = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
+            });
         }
 
         public async Task<bool> UserExists(string username)
