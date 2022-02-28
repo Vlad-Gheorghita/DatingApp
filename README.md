@@ -16,12 +16,12 @@ service between two users and other functionalities such as liking another user.
 🔹 Profile creation.<br>
 🔹 Messaging between users.<br>
 🔹 Filter user search.<br>
-
+<br>
 ## 🚀 Future improvments
 
 🔜 Updating the app to be responsive to all devices and screen.<br>
 🔜 Making an Android application of this web application.
-
+<br><br>
 ## 💻 Programming language
 🖥️ ASP.NET Core<br>
 🌐 Angular<br>
