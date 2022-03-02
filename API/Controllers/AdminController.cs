@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -36,9 +37,23 @@ namespace API.Controllers
 
         [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photos-to-moderate")]
-        public ActionResult GetPhotosForModeration()
+        public async Task<ActionResult> GetPhotosForModeration()
         {
-            return _adminService.GetPhotosForModeration();
+            return await _adminService.GetPhotosForModeration();
+        }
+
+        [Authorize(Policy = "ModeratePhotoRole")]
+        [HttpPost("photos-to-moderate/approve/{id}")]
+        public async Task<ActionResult<PhotoDto>> ApprovePhotoById(int id)
+        {
+            return await _adminService.ApprovePhotoById(id);
+        }
+
+        [Authorize(Policy = "ModeratePhotoRole")]
+        [HttpDelete("photos-to-moderate/reject/{id}")]
+        public async Task<ActionResult> RejectPhotoById(int id)
+        {
+            return await _adminService.RejectPhoto(id);
         }
     }
 }

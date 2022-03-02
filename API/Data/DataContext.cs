@@ -25,6 +25,7 @@ namespace API.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder buiilder)  //Aici facem override la DbContext. Specificam ce fel de tabel si ce fel de relatie vrem (Many to Many)
                                                                         //OBS: de la .NET 5 EntityFramework ofera automat many to many

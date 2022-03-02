@@ -11,5 +11,6 @@ namespace API.Entities
         public string PublicId { get; set; }
         public AppUser AppUser { get; set; }    //  
         public int AppUserId { get; set; }      //  Asta e relatie de EntityFramework in care Tabelei Photos ii se da o cheie straina pentru un AppUser
+        public bool IsApproved { get; set; }
     }
 }
