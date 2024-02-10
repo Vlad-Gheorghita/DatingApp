@@ -15,7 +15,7 @@ service between two users and other functionalities such as liking another user.
 🔹 Like another user.<br>
 🔹 Profile creation.<br>
 🔹 Messaging between users.<br>
-🔹 Filter user search.<br>
+🔹 Filter user search.<br>  
 <br>
 ## 🚀 Future improvments
 
