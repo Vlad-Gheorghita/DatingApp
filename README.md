@@ -1,7 +1,5 @@
 # 🌐 DatingApp
-The purpose of this application is to learn and understand the basic
-steps of making a Full-Stack web application using ASP.NET Core and Angular. In this application is included user authentication, messaging
-service between two users and other functionalities such as liking another user. The API was created using ASP.NET Core and the client was created using Angular. The messaging service and presence service to see if some user is online or not was realized using websockets via SignalR. The website can be seen in the following: [website](https://dtng-app.herokuapp.com/). 
+This application aims to provide a hands-on learning experience in developing a Full-Stack web application utilizing ASP.NET Core and Angular. It encompasses features such as user authentication, a messaging system between users, and additional functionalities like user liking. The API is built with ASP.NET Core, while the client utilizes Angular. The messaging and presence services, including online status detection, are facilitated through WebSockets via SignalR. You can explore the website at the following link: [website](https://dtng-app.herokuapp.com/). 
 
 ## 🔧 Architecture
 
@@ -17,9 +15,9 @@ service between two users and other functionalities such as liking another user.
 🔹 Messaging between users.<br>
 🔹 Filter user search.<br>  
 <br>
-## 🚀 Future improvments
+## 🚀 Future improvements
 
-🔜 Updating the app to be responsive to all devices and screen.<br>
+🔜 Updating the app to be responsive to all devices and screens.<br>
 🔜 Making an Android application of this web application.
 <br><br>
 ## 💻 Programming language
